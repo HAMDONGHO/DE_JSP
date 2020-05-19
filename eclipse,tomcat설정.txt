@@ -1,0 +1,15 @@
+User가 web server에 request하면 webserver가 해당 request에 대해 response함(Database와 연동, 웹페이지를 반환하는것)
+
+Mac java 환경변수 설정:
+1. Cd/Library/Java/JavaVirtualMachines/jdk.1.8.0_241.jdk/Contents/Home 들가서
+2. vi ~/.bash profile 들가서 i누르고 export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_144.jdk/Contens/Home
+하고 wq로 닫음
+3. Java -version 하고 끝!
+
+Mac tomcat 설치:
+1. Homebrew install tomcat@8(아마 설치는 /usr/local/Cellar/에 있음
+
+Mac eclipse tomcat 연동(참고로 웹에서 깐경우 경로는 jdk폴더까지만):
+1. server창에서 서버 연결해달라는거 클릭
+2. Tomcat v8.5선택 후 browse해서 tomcat 경로의 libexec디렉토리 선택 후 생성
+3. Run server!

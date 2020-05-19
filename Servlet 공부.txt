@@ -1,0 +1,17 @@
+👉jsp
+xxx.jsp 파일이 request하면 웹컨테이너(java파일에서 class파일로, 그리고 obj파일로, 모두 tomcat에서)로 가고 html로 response(개발자는 xxx.jsp까지만 하면 나머진 알아서)
+- Html기반이기에 jsp랑 다른게 아님 그저 언어만 jsp(java)를 사용한다는 것일뿐
+- jsp파일 생성은 webContent에서!
+
+👉servlet
+Url 맵핑은 주로 축약해서(서블릿 명보다) 사용
+- servlet 맵핑: browser의 요청에 따라 엄청많은 servlet을 구분하여 호출해야하는데, /servlet/com.servlet.servletEX이런 식의 복잡한 url을 /se로 간단히 만듦(보안 취약도 해결)
+- web.xml을 이용: web.xml은 웹 환경설정 파일임(url pattern으로 사용자가 들어오면 해당 name에 해당되는 class를 지정해줌으로 해결)
+- java Annotation을 이용(servlet 자체에서 해결)
+
+- servlet을 만들때 httpservlet을 상속 받아야함(httpservlet은 genericservlet을 또, servlet+servletconfig+serializable을 상속 받아야함. 왜?? 많은 데이터가 오고갈 수 있기 때문에 모두 구현을 해낼려면 많은 기능들을 구현해야하는데 이것이 담겨져 있기 때문. 따라서 httpservlet만 상속 받으면 그 전에 상속받은 모든것을 사용가능) → 애초에 servlet을 생성한다 하면 httpservlet을 상속 받는다고 extends해줌
+
+- httpservletrequest, httpservletresponse은 사용자에게 요청을 할때는 request 응답은 response! 둘다 요청과 응답에 대한 객체
+- 생성주기(생성 종료없이 실행만 해두되면 doGet에다가 전부 입력): @PostConstruce(servlet준비단계) → init()(생성) → service(일하는중) → destroy()(종료) →@preDestroy(정리단계)
+
+👉form데이터 처리
