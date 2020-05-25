@@ -1,3 +1,5 @@
+content_assist_autoactivation=true
+content_assist_autoactivation_delay=100
 eclipse.preferences.version=1
 fontPropagated=true
 org.eclipse.jface.textfont=1|Menlo|12.0|0|COCOA|1|;

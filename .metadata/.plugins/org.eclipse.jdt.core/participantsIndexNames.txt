@@ -1,5 +1,7 @@
 INDEX VERSION 1.131
 /Users/hamdongho/eclipse-workspace/Spring_project/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/1450084047.index
 /testJsp/src
+/Users/hamdongho/eclipse-workspace/JSP_project/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/1450084047.index
+/testJsp/src
 /Users/hamdongho/eclipse-workspace/Spring_project/.metadata/.plugins/org.eclipse.jst.jsp.core/jspsearch/3474682316.index
 /testJsp/src

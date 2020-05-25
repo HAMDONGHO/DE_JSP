@@ -10,12 +10,33 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   
+  <context-param>
+  	<param-name>imgDir</param-name>
+  	<param-value>/upload/img</param-value>
+  </context-param>
+  <context-param>
+  	<param-name>testServerIP</param-name>
+  	<param-value>127.0.0.1</param-value>
+  </context-param>
+    <context-param>
+  	<param-name>realServerIP</param-name>
+  	<param-value>108.22.0.1</param-value>
+  </context-param>
+  
   <servlet>
   <servlet-name>servletEx</servlet-name>
-  <servlet-class>com.testJsp.TestServlet</servlet-class>
+  <jsp-file>/config.jsp</jsp-file>
+  <init-param>
+  	<param-name>adminId</param-name>
+  	<param-value>admin</param-value>
+  </init-param>
+  <init-param>
+  	<param-name>adminPw</param-name>
+  	<param-value>1234</param-value>
+  </init-param>
   </servlet>
   <servlet-mapping>
   <servlet-name>servletEx</servlet-name>
-  <url-pattern>/TS</url-pattern>
+  <url-pattern>/config.jsp</url-pattern>
   </servlet-mapping>
 </web-app>

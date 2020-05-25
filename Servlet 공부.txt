@@ -14,4 +14,6 @@ Url 맵핑은 주로 축약해서(서블릿 명보다) 사용
 - httpservletrequest, httpservletresponse은 사용자에게 요청을 할때는 request 응답은 response! 둘다 요청과 응답에 대한 객체
 - 생성주기(생성 종료없이 실행만 해두되면 doGet에다가 전부 입력): @PostConstruce(servlet준비단계) → init()(생성) → service(일하는중) → destroy()(종료) →@preDestroy(정리단계)
 
-👉form데이터 처리
+👉form데이터 처리(request객체에 쌓여서 정보가 was로 전달됨)
+-get방식이 form method의 디폴트임. 보안이 약함, 사용자 정보가 url에 노출됨(파싱해서 타인이 가로챌 수 있음)
+-post방식은 사용자 정보가 url에 노출되지 않고 맵핑 정보만 노출됨, 보안이 강함.
