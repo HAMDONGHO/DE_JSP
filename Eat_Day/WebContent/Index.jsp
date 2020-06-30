@@ -27,7 +27,7 @@
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" href="#">기타</a>
 					</div></li>
-				<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 위치 </a>
+				<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">날씨 </a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<a class="dropdown-item" href="#">맑음</a> <a class="dropdown-item" href="#">흐림</a> <a class="dropdown-item" href="#">비</a> <a class="dropdown-item" href="#">눈</a>
 					</div></li>
