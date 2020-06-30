@@ -38,7 +38,7 @@
 			</form>
 		</div>
 	</nav>
-	<div>이곳은 지도넣는 곳
+	<div>이곳은 지도넣는 곳 안녕하세요
 	<img src="images/cat.jpeg">
 	</div>
 
