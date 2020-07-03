@@ -1,3 +1,4 @@
+
 package jsp.eatday.model;
 
 public class Rest {
