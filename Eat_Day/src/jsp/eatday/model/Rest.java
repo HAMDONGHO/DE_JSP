@@ -10,7 +10,7 @@ public class Rest {
 	private String salestime;
 	private String classfy;
 	private String weather;
-	private String temperature;
+	private int temperature;
 	
 	public String getId() {
 		return id;
@@ -60,10 +60,10 @@ public class Rest {
 	public void setWeather(String weather) {
 		this.weather = weather;
 	}
-	public String getTemperature() {
+	public int getTemperature() {
 		return temperature;
 	}
-	public void setTemperature(String temperature) {
+	public void setTemperature(int temperature) {
 		this.temperature = temperature;
 	}
 	
