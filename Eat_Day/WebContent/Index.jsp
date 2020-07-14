@@ -1,4 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="java.io.PrintWriter"%>
+<%@page import="jsp.eatday.menu.model.Menu"%>
+<%@page import="jsp.eatday.menu.model.MenuDAO"%>
+<%@page import="jsp.eatday.model.Rest"%>
+<%@page import="jsp.eatday.model.RestDAO"%>
+<%@page import="java.util.ArrayList"%>
+<%@ page import="java.sql.*, javax.sql.*, javax.naming.*" %>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2d3f891aa941df0a0b5c08b7f62ee1f9&libraries=services"></script>
 
 <!DOCTYPE html>
@@ -13,25 +20,28 @@
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<a class="navbar-brand" href="#">오늘 뭐 먹지??</a>
+		<a class="navbar-brand" href="Index.jsp">오늘 뭐 먹지??</a>
 		<br>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 위치 </a>
-					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="#">중문</a> <a class="dropdown-item" href="#">후문</a> <a class="dropdown-item" href="#">정문</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#">Something else here</a>
-					</div></li>
-				<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 분류 </a>
+               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="#" onclick="panTo1(); return false;">중문</a>
+                  <a class="dropdown-item" href="#" onclick="panTo2(); return false;">정문</a>
+                  <a class="dropdown-item" href="#" onclick="panTo3(); return false;">후문</a>
+                  
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#">Something else here</a>
+               </div></li>				<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 분류 </a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<a class="dropdown-item" href="#">한식</a> <a class="dropdown-item" href="#">양식</a> <a class="dropdown-item" href="#">일식</a> <a class="dropdown-item" href="#">중식</a> <a class="dropdown-item" href="#">디저트</a> <a class="dropdown-item" href="#">술</a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#">기타</a>
+						<a class="dropdown-item" href="#">선택안함</a>
 					</div></li>
 				<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">날씨 </a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<a class="dropdown-item" href="#">맑음</a> <a class="dropdown-item" href="#">흐림</a> <a class="dropdown-item" href="#">비</a> <a class="dropdown-item" href="#">눈</a>
+						<a class="dropdown-item" href="#">선택안함</a>
 					</div></li>
 			</ul>
 			<form class="form-inline my-2 my-lg-0">
@@ -40,61 +50,91 @@
 			</form>
 		</div>
 	</nav>
-	<div>
 <div class="cont-location">
-    <div id="map" style="margin-top:10px;width:100%;height:400px;border:1px solid #ccc;"></div>
+    <div id="map" style="margin:auto;width:80%;height:80%;border:1px soli #ccc;"></div>
 </div>
-
 <script>
+
 //마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
 var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-    mapOption = {
-        center: new kakao.maps.LatLng(36.628583, 127.457583), // 지도의 중심좌표
-        level: 4 // 지도의 확대 레벨
-    };  
+  mapOption = {
+      center: new kakao.maps.LatLng(36.628583, 127.457583), // 지도의 중심좌표
+      level: 4 // 지도의 확대 레벨
+  };  
 
 //지도를 생성합니다    
 var map = new kakao.maps.Map(mapContainer, mapOption); 
 
-// 장소 검색 객체를 생성합니다
+//장소 검색 객체를 생성합니다
 var ps = new kakao.maps.services.Places(map); 
 
-// 카테고리로 은행을 검색합니다
-ps.categorySearch('FD6', placesSearchCB, {useMapBounds:true}); 
+//카테고리로 은행을 검색합니다
+ps.categorySearch('CE7', placesSearchCB, {useMapBounds:true}); 
 
-// 키워드 검색 완료 시 호출되는 콜백함수 입니다
+//키워드 검색 완료 시 호출되는 콜백함수 입니다
 function placesSearchCB (data, status, pagination) {
-    if (status === kakao.maps.services.Status.OK) {
-        for (var i=0; i<data.length; i++) {
-            displayMarker(data[i]);    
-        }       
-    }
+  if (status === kakao.maps.services.Status.OK) {
+      for (var i=0; i<data.length; i++) {
+          displayMarker(data[i]);    
+      }       
+  }
 }
 
-// 지도에 마커를 표시하는 함수입니다
+//지도에 마커를 표시하는 함수입니다
 function displayMarker(place) {
-    // 마커를 생성하고 지도에 표시합니다
-    var marker = new kakao.maps.Marker({
-        map: map,
-        position: new kakao.maps.LatLng(place.y, place.x) 
-    });
+  // 마커를 생성하고 지도에 표시합니다
+  var marker = new kakao.maps.Marker({
+      map: map,
+      position: new kakao.maps.LatLng(place.y, place.x) 
+  });
 
-    // 마커에 클릭이벤트를 등록합니다
-    kakao.maps.event.addListener(marker, 'click', function() {
-        // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
-        infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
-        infowindow.open(map, marker);
-    });
+  // 마커에 클릭이벤트를 등록합니다
+  kakao.maps.event.addListener(marker, 'click', function() {
+      // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+      infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
+      infowindow.open(map, marker);
+  });
 }
 
+//지도 이동
+//충북대 중심
+function setCenter() {            
+  // 이동할 위도 경도 위치를 생성합니다 
+  var moveLatLon = new kakao.maps.LatLng(36.628583, 127.457583);
+  
+  // 지도 중심을 이동 시킵니다
+  map.setCenter(moveLatLon);
+}
+//중문
+function panTo1() {
+  // 이동할 위도 경도 위치를 생성합니다 
+  var moveLatLon = new kakao.maps.LatLng(36.632722, 127.458656);
+  
+  // 지도 중심을 부드럽게 이동시킵니다
+  // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+  map.panTo(moveLatLon);            
+} 
+//정문
+function panTo2() {
+  // 이동할 위도 경도 위치를 생성합니다 
+  var moveLatLon = new kakao.maps.LatLng(36.632959, 127.452813); //정문
+  
+  // 지도 중심을 부드럽게 이동시킵니다
+  // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+  map.panTo(moveLatLon);            
+}
+//후문  
+function panTo3() {
+  // 이동할 위도 경도 위치를 생성합니다 
+  var moveLatLon = new kakao.maps.LatLng(36.625222, 127.463933); //후문
+  
+  // 지도 중심을 부드럽게 이동시킵니다
+  // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+  map.panTo(moveLatLon);            
+}  
 </script>
-
-
-	<img src="images/cat.jpeg">
-	</div>
-
 	<footer>
 		<div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
 			<ol class="carousel-indicators">
