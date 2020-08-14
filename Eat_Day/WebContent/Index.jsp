@@ -2,7 +2,7 @@
 <%@page import="java.io.PrintWriter"%>
 <%@page import="jsp.eatday.menu.model.Menu"%>
 <%@page import="jsp.eatday.menu.model.MenuDAO"%>
-<%@page import="jsp.eatday.model.Rest"%>
+<%@page import="jsp.eatday.model.*"%>
 <%@page import="jsp.eatday.model.RestDAO"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page import="java.sql.*, javax.sql.*, javax.naming.*" %>
@@ -161,6 +161,19 @@ function panTo3() {
 			</a> <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next"> <span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="sr-only">Next</span>
 			</a>
 		</div>
+		<div>
+		<%
+			RestDAO restDAO = new RestDAO();
+			ArrayList<Rest> list = restDAO.getTest();
+
+			for(Rest dto: list){
+		%>
+			<p><%=dto.getAddress() %></p>
+        	<p><%=dto.getNumber() %></p>
+        	<p><%=dto.getSalestime() %></p>
+        	System.out.println(dto.getAddress());
+        <%}%>
+        </div>
 	</footer>
 </body>
 </html>
