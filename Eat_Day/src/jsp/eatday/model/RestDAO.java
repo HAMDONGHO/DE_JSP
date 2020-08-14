@@ -14,7 +14,7 @@ public class RestDAO {
    //가게 아이디(메뉴 찾기위함), 가게이름 return
    public ArrayList<Rest> getLocation(String data1, String data2, String data3){
       ArrayList<Rest> list = new ArrayList<Rest>();
-      String SQL = "select id, name, address, number, salestime from Rest";
+      String SQL = "select id, name, address, number, salestime, Rep_Menu, Latitude, Longitude from Rest";
       try {
          String dbURL = "jdbc:mysql://localhost:3306/eat_day?serverTimezone=Asia/Seoul&useSSL=false";
          String dbID = "root";
@@ -23,7 +23,7 @@ public class RestDAO {
          conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
          
          if (data1 != "" && data2 == "" && data3 == "") {
-            SQL += " where lacation = '" + data1+"'";
+            SQL += " where location = '" + data1+"'";
          }
          
          if (data1 == "" && data2 != "" && data3 == "") {
@@ -56,6 +56,9 @@ public class RestDAO {
             rest.setAddress(rs.getString(3));
             rest.setNumber(rs.getInt(4));
             rest.setSalestime(rs.getString(5));
+            rest.setRep_Menu(rs.getString(6));
+            rest.setLatitude(rs.getFloat(7));
+            rest.setLongitude(rs.getFloat(8));
             list.add(rest);   
          }
 

@@ -18,13 +18,14 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 <title>Eat_Day</title>
 </head>
-<body>
+<body bgcolor='#000000'>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<a class="navbar-brand" href="Index.jsp">오늘 뭐 먹지??</a>
 		<br>
 		<form action="Index.jsp" method="get">
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 		        <select class="selectpicker" name="location">
+		          <option value="" selected disabled hidden >선택해주세요.</option>
                   <option value="정문" onclick="panTo1(); return false;">정문</option>
                   <option value="중문" onclick="panTo2(); return false;">중문</option>
                   <option value="후문" onclick="panTo3(); return false;">후문</option>
@@ -32,6 +33,7 @@
                </select>
                <br>
                <select class="selectpicker" name="classfy">
+                  <option value="" selected disabled hidden >선택해주세요.</option>
                   <option value="한식" onclick="panTo1(); return false;">한식</option>
                   <option value="양식" onclick="panTo2(); return false;">양식</option>
                   <option value="일식" onclick="panTo3(); return false;">일식</option>
@@ -41,6 +43,7 @@
                   <option value="" onclick="panTo3(); return false;">선택안함</option>
                </select>
                  <select class="selectpicker" name="weather">
+                  <option value="" selected disabled hidden >선택해주세요.</option>
                   <option value="맑음" onclick="panTo1(); return false;">맑음</option>
                   <option value="흐림" onclick="panTo2(); return false;">흐림</option>
                   <option value="비" onclick="panTo3(); return false;">비</option>
@@ -50,20 +53,23 @@
                <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">찾기</button>
                </form>
 			</div>
-			<div>
-				<form class="form-inline my-2 my-lg-0">
-					<input class="form-control mr-sm-2" type="search" placeholder="몇도??" aria-label="Search">
-					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">회원가입</button>
-					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">로그인</button>
-				</form>
-			</div>
+			<div style="float: right;">
+				<ul class="nav-item dropdown">
+				    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Join</a>
+				    <div class="dropdown-menu">
+				      <a class="dropdown-item" href="login.jsp">로그인</a>
+				      <a class="dropdown-item" href="join.jsp">회원가입</a>
+				    </div>
+				</ul> 
+			</div>		
 	</nav>
 	<br>
 <div class="cont-location">
-    <div id="map" style="position: absolute; right:10px; margin:auto;width:65%;height:80%;border:1px soli #ccc;"></div>
-    <div id="content_eat" style="position: absolute; left:10px; margin: auto; width:30%; hegight:80%; border: 1px soli #ccc;">
+    <div id="map" style="position: absolute; right:10px; margin:auto;width:43%;height:80%;border:1px soli #ccc;"></div>
+    <div id="content_eat" style="position: absolute; left:10px; margin: auto; width:54%; hegight:80%; border: 1px soli #ccc;">
     	<table class="table table-bordered table-sm">
     	<th>가게이름</th>
+    	<th>대표메뉴</th>
     	<th>전화번호</th>
     	<th>영업시간</th>
 		<%
@@ -80,12 +86,15 @@
 			
 			for (Rest show: selec){
 				menu_id = show.getId();
+				lati = show.getLatitude();
+				longi = show.getLongitude();
 				//onclick로 지도에 해당 위치만 표시??
 		%>
 			<tr>
 				<td><%=show.getName() %></td>
+				<td><%=show.getRep_Menu() %></td>
 				<td><%=show.getNumber() %></td>
-				<td><%=show.getSalestime() %>
+				<td><%=show.getSalestime() %></td>
 			<tr>
 		<%}%>
 		</table>
@@ -95,6 +104,9 @@
 		%>
 			<p> <%=show_menu.getMenuname() %></p>
 		<%}%>
+			<p> <%= lati %>
+			<p> <%= longi %>
+		
     </div>
 </div>
 <script>
