@@ -14,7 +14,7 @@ public class RestDAO {
    //가게 아이디(메뉴 찾기위함), 가게이름 return
    public ArrayList<Rest> getLocation(String data1, String data2, String data3){
       ArrayList<Rest> list = new ArrayList<Rest>();
-      String SQL = "select id, name from Rest";
+      String SQL = "select id, name, address, number, salestime from Rest";
       try {
          String dbURL = "jdbc:mysql://localhost:3306/eat_day?serverTimezone=Asia/Seoul&useSSL=false";
          String dbID = "root";
@@ -22,29 +22,29 @@ public class RestDAO {
          Class.forName("com.mysql.jdbc.Driver");
          conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
          
-         if (data1 != null && data2 == null && data3 == null) {
-            SQL += " where lacation = " + data1;
+         if (data1 != "" && data2 == "" && data3 == "") {
+            SQL += " where lacation = '" + data1+"'";
          }
          
-         if (data1 == null && data2 != null && data3 == null) {
-            SQL += " where classfy = " + data2;
+         if (data1 == "" && data2 != "" && data3 == "") {
+            SQL += " where classfy = '" + data2+"'";
          }
 
-         if (data1 == null && data2 == null && data3 != null) {
-            SQL += " where weather = " + data3;
+         if (data1 == "" && data2 == "" && data3 != "") {
+            SQL += " where weather = '" + data3+"'";
          }
          
-         if (data1 != null && data2 != null && data3 == null) {
-            SQL += " where location = " + data1 +", classfy = " + data2;
+         if (data1 != "" && data2 != "" && data3 == "") {
+            SQL += " where location = '" + data1 +"'and classfy = '" + data2+"'";
          }
-         if (data1 != null && data2 == null && data3 != null) {
-            SQL += " where location = " + data1 +", weather = " + data3;
+         if (data1 != "" && data2 == "" && data3 != "") {
+            SQL += " where location = '" + data1 +"'and weather = '" + data3+"'";
          }
-         if (data1 == null && data2 != null && data3 != null) {
-            SQL += " where classfy = " + data2 +", weather = " + data3;
+         if (data1 == "" && data2 != "" && data3 != "") {
+            SQL += " where classfy = '" + data2 +"'and weather = '" + data3+"'";
          }
-         if (data1 != null && data2 != null && data3 != null) {
-            SQL += " where location = " + data1 +", classfy = " + data2 +", weather = " + data3;
+         if (data1 != "" && data2 != "" && data3 != "") {
+            SQL += " where location = '" + data1 +"'and classfy = '" + data2 +"'and weather = '" + data3+"'";
          }
          
          pstmt = conn.prepareStatement(SQL); //연결객체와 statement 객체 결합
@@ -53,6 +53,9 @@ public class RestDAO {
             Rest rest = new Rest();
             rest.setId(rs.getString(1));
             rest.setName(rs.getString(2));
+            rest.setAddress(rs.getString(3));
+            rest.setNumber(rs.getInt(4));
+            rest.setSalestime(rs.getString(5));
             list.add(rest);   
          }
 

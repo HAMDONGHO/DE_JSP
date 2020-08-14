@@ -14,7 +14,7 @@ public class MenuDAO {
 	
 	public ArrayList<Menu> Menu(String data){
 		ArrayList<Menu> list = new ArrayList<Menu>();
-		String SQL = "select manunum, menuname, price from menu";
+		String SQL = "select menunum, menuname, price from menu";
 		try {
 			String dbURL = "jdbc:mysql://localhost:3306/eat_day?serverTimezone=Asia/Seoul&useSSL=false";
 			String dbID = "root";
@@ -23,7 +23,7 @@ public class MenuDAO {
 			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
 			
 			if (data != null) {
-				SQL += " where id = " + data;
+				SQL += " where id = '" + data+"'";
 			}
 			pstmt = conn.prepareStatement(SQL); //연결객체와 statement 객체 결합
 			rs = pstmt.executeQuery();

@@ -22,36 +22,80 @@
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<a class="navbar-brand" href="Index.jsp">오늘 뭐 먹지??</a>
 		<br>
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav mr-auto">
-				<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 위치 </a>
-               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#" onclick="panTo1(); return false;">중문</a>
-                  <a class="dropdown-item" href="#" onclick="panTo2(); return false;">정문</a>
-                  <a class="dropdown-item" href="#" onclick="panTo3(); return false;">후문</a>
-                  
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Something else here</a>
-               </div></li>				<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 분류 </a>
-					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="#">한식</a> <a class="dropdown-item" href="#">양식</a> <a class="dropdown-item" href="#">일식</a> <a class="dropdown-item" href="#">중식</a> <a class="dropdown-item" href="#">디저트</a> <a class="dropdown-item" href="#">술</a>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#">선택안함</a>
-					</div></li>
-				<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">날씨 </a>
-					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-						<a class="dropdown-item" href="#">맑음</a> <a class="dropdown-item" href="#">흐림</a> <a class="dropdown-item" href="#">비</a> <a class="dropdown-item" href="#">눈</a>
-						<a class="dropdown-item" href="#">선택안함</a>
-					</div></li>
-			</ul>
-			<form class="form-inline my-2 my-lg-0">
-				<input class="form-control mr-sm-2" type="search" placeholder="몇도??" aria-label="Search">
-				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">오늘의 기온은??</button>
-			</form>
-		</div>
+		<form action="Index.jsp" method="get">
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		        <select class="selectpicker" name="location">
+                  <option value="정문" onclick="panTo1(); return false;">정문</option>
+                  <option value="중문" onclick="panTo2(); return false;">중문</option>
+                  <option value="후문" onclick="panTo3(); return false;">후문</option>
+                  <option value="" onclick="panTo3(); return false;">선택안함</option>
+               </select>
+               <br>
+               <select class="selectpicker" name="classfy">
+                  <option value="한식" onclick="panTo1(); return false;">한식</option>
+                  <option value="양식" onclick="panTo2(); return false;">양식</option>
+                  <option value="일식" onclick="panTo3(); return false;">일식</option>
+                  <option value="중식" onclick="panTo3(); return false;">중식</option>
+                  <option value="디저트" onclick="panTo3(); return false;">디저트</option>
+                  <option value="술" onclick="panTo3(); return false;">술</option>
+                  <option value="" onclick="panTo3(); return false;">선택안함</option>
+               </select>
+                 <select class="selectpicker" name="weather">
+                  <option value="맑음" onclick="panTo1(); return false;">맑음</option>
+                  <option value="흐림" onclick="panTo2(); return false;">흐림</option>
+                  <option value="비" onclick="panTo3(); return false;">비</option>
+                  <option value="눈" onclick="panTo3(); return false;">눈</option>
+                  <option value="" onclick="panTo3(); return false;">선택안함</option>
+               </select>
+               <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">찾기</button>
+               </form>
+			</div>
+			<div>
+				<form class="form-inline my-2 my-lg-0">
+					<input class="form-control mr-sm-2" type="search" placeholder="몇도??" aria-label="Search">
+					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">회원가입</button>
+					<button class="btn btn-outline-success my-2 my-sm-0" type="submit">로그인</button>
+				</form>
+			</div>
 	</nav>
+	<br>
 <div class="cont-location">
-    <div id="map" style="margin:auto;width:80%;height:80%;border:1px soli #ccc;"></div>
+    <div id="map" style="position: absolute; right:10px; margin:auto;width:65%;height:80%;border:1px soli #ccc;"></div>
+    <div id="content_eat" style="position: absolute; left:10px; margin: auto; width:30%; hegight:80%; border: 1px soli #ccc;">
+    	<table class="table table-bordered table-sm">
+    	<th>가게이름</th>
+    	<th>전화번호</th>
+    	<th>영업시간</th>
+		<%
+			String location = request.getParameter("location");
+			String classfy = request.getParameter("classfy");
+			String weather = request.getParameter("weather");
+			double longi = 0;
+			double lati = 0;
+			String menu_id = null;
+					
+			RestDAO SelectDAO = new RestDAO();
+			ArrayList<Rest> selec = SelectDAO.getLocation(location, classfy, weather);
+			MenuDAO Menu_eat = new MenuDAO();
+			
+			for (Rest show: selec){
+				menu_id = show.getId();
+				//onclick로 지도에 해당 위치만 표시??
+		%>
+			<tr>
+				<td><%=show.getName() %></td>
+				<td><%=show.getNumber() %></td>
+				<td><%=show.getSalestime() %>
+			<tr>
+		<%}%>
+		</table>
+		<%
+			ArrayList<Menu> menu_list = Menu_eat.Menu(menu_id);
+			for (Menu show_menu: menu_list){
+		%>
+			<p> <%=show_menu.getMenuname() %></p>
+		<%}%>
+    </div>
 </div>
 <script>
 
@@ -108,7 +152,7 @@ function setCenter() {
   map.setCenter(moveLatLon);
 }
 //중문
-function panTo1() {
+function panTo2() {
   // 이동할 위도 경도 위치를 생성합니다 
   var moveLatLon = new kakao.maps.LatLng(36.632722, 127.458656);
   
@@ -117,7 +161,7 @@ function panTo1() {
   map.panTo(moveLatLon);            
 } 
 //정문
-function panTo2() {
+function panTo1() {
   // 이동할 위도 경도 위치를 생성합니다 
   var moveLatLon = new kakao.maps.LatLng(36.632959, 127.452813); //정문
   
@@ -136,44 +180,6 @@ function panTo3() {
 }  
 </script>
 	<footer>
-		<div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-			<ol class="carousel-indicators">
-				<li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
-				<li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
-			</ol>
-			<div class="carousel-inner">
-				<div class="carousel-item active">
-					<img src="images/dog.jpeg" class="d-block w-20" alt="...">
-					<div class="carousel-caption d-none d-md-block">
-						<h5>이곳 어떠세요??</h5>
-						<p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-					</div>
-				</div>
-				<div class="carousel-item">
-					<img src="images/cat.jpeg" class="d-block w-20" alt="...">
-					<div class="carousel-caption d-none d-md-block">
-						<h5>이곳 어떠세요??</h5>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-					</div>
-				</div>
-			</div>
-			<a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev"> <span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="sr-only">Previous</span>
-			</a> <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next"> <span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="sr-only">Next</span>
-			</a>
-		</div>
-		<div>
-		<%
-			RestDAO restDAO = new RestDAO();
-			ArrayList<Rest> list = restDAO.getTest();
-
-			for(Rest dto: list){
-		%>
-			<p><%=dto.getAddress() %></p>
-        	<p><%=dto.getNumber() %></p>
-        	<p><%=dto.getSalestime() %></p>
-        	System.out.println(dto.getAddress());
-        <%}%>
-        </div>
 	</footer>
 </body>
 </html>
