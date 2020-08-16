@@ -9,7 +9,9 @@
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Jekyll v4.1.1">
     <title>Signin Template · Bootstrap</title>
-
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <script src="bootstrap.min.js"></script>
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/sign-in/">
 
     <!-- Bootstrap core CSS -->

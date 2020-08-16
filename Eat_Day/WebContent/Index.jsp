@@ -75,8 +75,11 @@
 			String weather = request.getParameter("weather");
 			double longi = 0;
 			double lati = 0;
-			String Name_Rest = null;
 			String menu_id = null;
+			double[] lati_test = new double[100];
+			double[] longi_test = new double[100];
+			String[] Name_arr = new String[100];
+			
 					
 			RestDAO SelectDAO = new RestDAO();
 			ArrayList<Rest> selec = SelectDAO.getLocation(location, classfy, weather);
@@ -86,8 +89,6 @@
 				menu_id = show.getId();
 				lati = show.getLatitude();
 				longi = show.getLongitude();
-				Name_Rest = show.getName();
-				//onclick로 지도에 해당 위치만 표시??
 		%>
 			<tr>
 				<td><%=show.getName() %></td>
@@ -96,26 +97,43 @@
 				<td><%=show.getSalestime() %></td>
 			<tr>
 		<%}%>
+		<%
+			for (int i = 0; i < selec.size(); i++){
+				Name_arr[i] = selec.get(i).getName();
+				lati_test[i] = selec.get(i).getLatitude();
+				longi_test[i] = selec.get(i).getLongitude();
+		%>
+			<%}%>	
+			
 		</table>	
     </div>
 </div>
 <script>
 
+var lati_test = new Array();
+var Name_arr = new Array();
+var longi_test = new Array();
 var lati = '<%=lati%>'
 var longi = '<%=longi%>'
-var Name = '<%=Name_Rest%>'
 var moveLatLon1 = new kakao.maps.LatLng(36.632959, 127.452813); //정문
 var moveLatLon2 = new kakao.maps.LatLng(36.632722, 127.458656); //중문
 var moveLatLon3 = new kakao.maps.LatLng(36.625222, 127.463933); //후문
 var moveBasic = new kakao.maps.LatLng(36.628583, 127.457583);
 
+// 자바스크립트 배열에 이름, 위도, 경도 java 배열 담음
+<%for(int i=0;i<selec.size();i++){%>
+	Name_arr[<%=i%>]='<%=Name_arr[i]%>';
+	lati_test[<%=i%>]='<%=lati_test[i]%>';
+	longi_test[<%=i%>]='<%=longi_test[i]%>';
+<%}%>
+
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
   mapOption = {
-      center: new kakao.maps.LatLng(lati, longi), // 지도의 중심좌표
+      center: new kakao.maps.LatLng(lati, longi), // 지도의 중심좌표(마지막 값 중심으로 배치 시킬))
       level: 4 // 지도의 확대 레벨
   };  
 
-//지도를 생성합니다    
+//지도 생성
 var map = new kakao.maps.Map(mapContainer, mapOption); 
 
 //지도 이동
@@ -136,28 +154,37 @@ function panToL(){
 	}
 }
 
-//마커를 표시할 위치와 title 객체 배열입니다 
-var positions = [
-    {
-    	content: Name, 
-        latlng: new kakao.maps.LatLng(lati, longi)
-    },
-    {
-        title: '생태연못', 
-        latlng: new kakao.maps.LatLng(33.450936, 126.569477)
-    },
-    {
-        title: '텃밭', 
-        latlng: new kakao.maps.LatLng(33.450879, 126.569940)
-    },
-    {
-        title: '근린공원',
-        latlng: new kakao.maps.LatLng(33.451393, 126.570738)
-    }
-];
+//마커에 적용할 위치 변수
+var positions = [];
+/*var positions = [
+	{
+		content: Name_arr[i], 
+    	latlng: new kakao.maps.LatLng(lati, longi)
+	},
+	{
+    	content: '생태연못', 
+    	latlng: new kakao.maps.LatLng(33.450936, 126.569477)
+	},
+	{
+    	title: '텃밭', 
+    	latlng: new kakao.maps.LatLng(33.450879, 126.569940)
+	},
+	{
+    	title: '근린공원',
+    	latlng: new kakao.maps.LatLng(33.451393, 126.570738)
+	}
+];*/
 
+//마커를 표시할 위치와 title 객체 배열에 받아온 이름, 위도, 경도 추가 
+for(var i=0; i< Name_arr.length; i++){
+	positions.push({content:Name_arr[i],latlng:new kakao.maps.LatLng(lati_test[i],longi_test[i])})
+	
+}
+
+//마커 이미지
 var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
 
+//마커마다 이미지 적용해서 지도에 추가
 for (var i = 0; i < positions.length; i ++) {
     
     // 마커 이미지의 이미지 크기 입니다
@@ -199,9 +226,12 @@ function makeOutListener(infowindow) {
     };
 }
 
-console.log(Name)
-console.log(lati)
-console.log(longi)
+//이름, 위도, 경도 test
+for(var j = 0; j<Name_arr.length; j++){
+	console.log(Name_arr[j]);
+	console.log(lati_test[j]);
+	console.log(longi_test[j]);
+}
 
 /*
 //장소 검색 객체를 생성합니다
