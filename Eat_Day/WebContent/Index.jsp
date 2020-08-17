@@ -52,8 +52,9 @@
 			</div>
 			<div style="float: right;">
 				<ul class="nav-item dropdown">
-				    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Join</a>
+				    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">My Page</a>
 				    <div class="dropdown-menu">
+				      <a class="dropdown-item" href="Mypage.jsp">My Page</a>
 				      <a class="dropdown-item" href="login.jsp">로그인</a>
 				      <a class="dropdown-item" href="join.jsp">회원가입</a>
 				    </div>
