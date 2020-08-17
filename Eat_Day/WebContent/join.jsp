@@ -1,4 +1,3 @@
-  
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -32,13 +31,13 @@
 	        <div class="card card-signin my-5">
 	          <div class="card-body">
 	            <h5 class="card-title text-center">Join Us</h5>
-	            <form class="form-signin" method="post" action="joinPro.jsp">
 	            
+	            <form class="form-signin" method="post" action="joinPro.jsp">
 	              <div class="input-group mb-3">
 	               	<div class="input-group-prepend">
 				    	<span class="input-group-text">ID</span>
 				 	</div>
-	                <input type="text" id="ID" name = "ID" class="form-control" placeholder="ID" required autofocus>
+	                <input type="text" id="id" name = "id" class="form-control" placeholder="ID" required autofocus>
 	              </div>
 	              
 	              <div class="input-group mb-3">
@@ -59,7 +58,7 @@
  					<div class="input-group-prepend">
 				    	<span class="input-group-text">Phone</span>
 				 	</div>
-	                <input type="text" id="Phone" name = "Phone" class="form-control" placeholder="Phone" required>
+	                <input type="number" id="phone" name = "phone" class="form-control" placeholder="phone" required>
 	              </div>
               
 	              <div class="input-group mb-3">
@@ -70,39 +69,20 @@
 	              </div>
 	              
 	              <div class="input-group mb-3">
- 					 <div class="input-group-prepend">
+ 					<div class="input-group-prepend">
 				    	<span class="input-group-text">Birth</span>
-				 	 </div>   
-	                   <script type="text/javascript">
-                         var today = new Date();
-                         var toyear = parseInt(today.getFullYear ());
-                         var start = toyear;
-                         var end = toyear - 15;
-
-                         document.write("<select name=birth1> ");
-                         document.write("<option value='2015' selected>");
-                         for (i=start;i>=end;i--) document.write("<option>"+i);
-                         document.write("</select>년  ");
-
-                         document.write("<select name=birth2>");
-                         document.write("<option value='' selected>");
-                         for (i=1;i<=12;i++) document.write("<option>"+i);
-                         document.write("</select>월  ");
-
-                         document.write("<select name=birth3>");
-                         document.write("<option value='' selected>");
-                         for (i=1;i<=31;i++) document.write("<option>"+i);
-                         document.write("</select>일  </font>");
-                        </script>
-                   </div>
-                         
-                   <div class="input-group mb-3">
- 					 <div class="input-group-prepend">
-				    	<span class="input-group-text">Gender</span>
-				 	 </div>   
-                     <input type="radio" id="gender" name = "gender" value="남" class="form-control" required>남
-                     <input type="radio" id="gender" name = "gender" value="여" class="form-control" required>여
-                   </div>
+				 	</div>
+	                <input type="number" id="year" name = "year" class="form-control" placeholder="Year" required>
+	                <input type="number" id="month" name = "month" class="form-control" placeholder="Month" required>
+	                <input type="number" id="day" name = "day" class="form-control" placeholder="Day" required>
+	              </div>
+	              
+	              <div class="input-group mb-3">
+	              	<div class="input-group-prepend">
+	              		<span class="input-group-text">Gender</span>
+				 	</div>
+				 	<input type="text" id="sex" name = "sex" class="form-control" placeholder="남자or여자로 입력해주세요." required>
+                  </div>
 	              
              	<hr class="my-4">
               	<button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">회원가입</button>

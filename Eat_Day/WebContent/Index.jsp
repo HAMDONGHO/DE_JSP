@@ -18,6 +18,14 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 <title>Eat_Day</title>
 </head>
+<%
+	String userID = null;
+
+	if(session.getAttribute("id") != null){
+		userID = (String) session.getAttribute("id");
+	}
+	
+	%>
 <body bgcolor='#000000'>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<a class="navbar-brand" href="Index.jsp">오늘 뭐 먹지??</a>
@@ -50,16 +58,27 @@
                <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">찾기</button>
                </form>
 			</div>
+			<% if (userID == null) {%>
 			<div style="float: right;">
 				<ul class="nav-item dropdown">
 				    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">My Page</a>
 				    <div class="dropdown-menu">
-				      <a class="dropdown-item" href="Mypage.jsp">My Page</a>
 				      <a class="dropdown-item" href="login.jsp">로그인</a>
 				      <a class="dropdown-item" href="join.jsp">회원가입</a>
 				    </div>
 				</ul> 
-			</div>		
+			</div>	
+			<%} else{ %>
+			<div style="float: right;">
+				<ul class="nav-item dropdown">
+				    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">My Page</a>
+				    <div class="dropdown-menu">
+				      <a class="dropdown-item" href="MyPage.jsp">My Page</a>
+				      <a class="dropdown-item" href="logout.jsp">로그아웃</a>
+				    </div>
+				</ul> 
+			</div>	
+				<%}%>
 	</nav>
 	<br>
 <div class="cont-location">

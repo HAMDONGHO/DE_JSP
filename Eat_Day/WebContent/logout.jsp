@@ -14,24 +14,12 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script><title>Eat Day : 로그인</title>
 </head>
 <body> 
-	<div class="container">
-		<div class="col-lg-4"></div>
-		<div class="col-lg-4">
-			<div class="jumbotron" style="padding-top: 20px;">
-				<form method="post" action="loginPro.jsp">
-					<h3 style="text=align: center;">Eat Day</h3>
-					<div class="form-group">
-						<input type="text" class="form-control" placeholder="ID" name="id" maxlength="20">
-					</div>
-					<div class="form-group">
-						<input type="password" class="form-control" placeholder="Password" name="password" maxlength="20">
-					</div>
-						<input type="submit" class="btn btn-primary form-control" value="로그인">
-	
-				</form>
-			</div>
-		</div>
-	</div>
+	<%
+		session.invalidate();
+	%>
+	<script>
+		location.href = 'Index.jsp';
+	</script>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.js"></script>
 </body>
