@@ -45,7 +45,8 @@
                   <option value="양식">양식</option>
                   <option value="일식">일식</option>
                   <option value="중식">중식</option>
-                  <option value="디저트">디저트</option>
+                  <option value="패스트푸드">패스트푸드</option>
+                  <option value="카페">카페</option>
                   <option value="술">술</option>
                </select>
                  <select class="selectpicker" name="weather">
@@ -56,8 +57,8 @@
                   <option value="눈">눈</option>
                </select>
                <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">찾기</button>
-               </form>
-			</div>
+             </div>
+          </form>
 			<% if (userID == null) {%>
 			<div style="float: right;">
 				<ul class="nav-item dropdown">

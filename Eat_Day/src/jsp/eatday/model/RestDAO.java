@@ -46,7 +46,9 @@ public class RestDAO {
          if (data1 != "" && data2 != "" && data3 != "") {
             SQL += " where location = '" + data1 +"'and classfy = '" + data2 +"'and weather = '" + data3+"'";
          }
-         
+         System.out.println(data1);
+         System.out.println(data2);
+         System.out.println(data3);
          pstmt = conn.prepareStatement(SQL); //연결객체와 statement 객체 결합
          rs = pstmt.executeQuery();
          while(rs.next()) {
