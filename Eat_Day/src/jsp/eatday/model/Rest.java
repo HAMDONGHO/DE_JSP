@@ -11,9 +11,9 @@ public class Rest {
 	private String classfy;
 	private String weather;
 	private int temperature;
-	private String Rep_Menu;
-	private float Latitude;
-	private float Longitude;
+	private String rep;
+	private float latitude;
+	private float longitude;
 	
 	public String getId() {
 		return id;
@@ -69,23 +69,23 @@ public class Rest {
 	public void setTemperature(int temperature) {
 		this.temperature = temperature;
 	}
-	public String getRep_Menu() {
-		return Rep_Menu;
+	public String getRep() {
+		return rep;
 	}
-	public void setRep_Menu(String Rep_Menu) {
-		this.Rep_Menu = Rep_Menu;
+	public void setRep(String rep) {
+		this.rep = rep;
 	}
 	public float getLatitude() {
-		return Latitude;
+		return latitude;
 	}
-	public void setLatitude(float Latitude) {
-		this.Latitude = Latitude;
+	public void setLatitude(float latitude) {
+		this.latitude = latitude;
 	}
 	public float getLongitude() {
-		return Longitude;
+		return longitude;
 	}
-	public void setLongitude(float Longitude) {
-		this.Longitude = Longitude;
+	public void setLongitude(float longitude) {
+		this.longitude = longitude;
 	}
 	
 

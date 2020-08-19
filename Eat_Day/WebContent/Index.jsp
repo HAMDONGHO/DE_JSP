@@ -24,6 +24,7 @@
 	if(session.getAttribute("id") != null){
 		userID = (String) session.getAttribute("id");
 	}
+	System.out.println(userID);
 	
 	%>
 <body bgcolor='#000000'>
@@ -46,6 +47,7 @@
                   <option value="일식">일식</option>
                   <option value="중식">중식</option>
                   <option value="패스트푸드">패스트푸드</option>
+                  <option value="분식">분식</option>
                   <option value="카페">카페</option>
                   <option value="술">술</option>
                </select>
@@ -68,18 +70,19 @@
 				      <a class="dropdown-item" href="join.jsp">회원가입</a>
 				    </div>
 				</ul> 
-			</div>	
+			</div>		
 			<%} else{ %>
 			<div style="float: right;">
 				<ul class="nav-item dropdown">
 				    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">My Page</a>
 				    <div class="dropdown-menu">
 				      <a class="dropdown-item" href="MyPage.jsp">My Page</a>
+				      <a class="dropdown-item" href="InsertRest.jsp">맛집추가</a>
 				      <a class="dropdown-item" href="logout.jsp">로그아웃</a>
 				    </div>
 				</ul> 
 			</div>	
-				<%}%>
+			<%}%>
 	</nav>
 	<br>
 <div class="cont-location">

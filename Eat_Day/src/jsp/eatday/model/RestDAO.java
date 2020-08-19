@@ -3,6 +3,8 @@ package jsp.eatday.model;
 import java.sql.*;
 import java.util.*;
 
+import jsp.eatday.user.model.User;
+
 
 //@WebServlet("/select")
 public class RestDAO { 
@@ -58,7 +60,7 @@ public class RestDAO {
             rest.setAddress(rs.getString(3));
             rest.setNumber(rs.getInt(4));
             rest.setSalestime(rs.getString(5));
-            rest.setRep_Menu(rs.getString(6));
+            rest.setRep(rs.getString(6));
             rest.setLatitude(rs.getFloat(7));
             rest.setLongitude(rs.getFloat(8));
             list.add(rest);   
@@ -77,6 +79,40 @@ public class RestDAO {
       return list;
 
    }
+	public int insert(Rest rest) {
+		try {
+			 String dbURL = "jdbc:mysql://localhost:3306/eat_day?serverTimezone=Asia/Seoul&useSSL=false";
+	         String dbID = "root";
+	         String dbPassword = "ehdgH*7958";
+	         Class.forName("com.mysql.jdbc.Driver");
+	         conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
+	         
+	         pstmt = conn.prepareStatement("insert into Rest values(?,?,?,?,?,?,?,?,?,?,?,?)");
+	         pstmt.setString(1, rest.getId());
+	         pstmt.setString(2, rest.getName());
+	         pstmt.setString(3, rest.getLocation());
+	         pstmt.setString(4, rest.getAddress());
+	         pstmt.setInt(5, rest.getNumber());
+	         pstmt.setString(6, rest.getSalestime());
+	         pstmt.setString(7, rest.getClassfy());
+	         pstmt.setString(8, rest.getWeather());
+	         pstmt.setInt(9, rest.getTemperature());
+	         pstmt.setString(10, rest.getRep());
+	         pstmt.setFloat(11, rest.getLatitude());
+	         pstmt.setFloat(12, rest.getLongitude());
+				
+	         return pstmt.executeUpdate();
+	         
+	         }catch(Exception e) {
+	        	 e.printStackTrace();
+	         
+	      }finally{
+	    	  if(pstmt!=null){ try{ pstmt.close(); } catch(Exception e){ e.printStackTrace(); } }
+	    	  if(conn!=null){ try{ conn.close(); } catch(Exception e){ e.printStackTrace(); } }
+	    	  if(rs!=null){ try{ rs.close(); } catch(Exception e){ e.printStackTrace(); } }
+	    	  }
+		return -1;
+		}
    
    //핀 안에서 자세히 보기 눌렀을때, 보여지는 부분
    public ArrayList<Rest> getInfo(String data){
