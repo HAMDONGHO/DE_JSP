@@ -75,7 +75,7 @@
 				session.setAttribute("id", rest.getId());
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
-				script.println("location.href = 'Index.jsp'");
+				script.println("location.href = 'InsertRest.jsp'");
 				script.println("</script>");
 			}
 			

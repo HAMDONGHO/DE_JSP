@@ -6,7 +6,7 @@ public class Rest {
 	private String name;
 	private String location;
 	private String address;
-	private int number;
+	private String number;
 	private String salestime;
 	private String classfy;
 	private String weather;
@@ -39,10 +39,10 @@ public class Rest {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public int getNumber() {
+	public String getNumber() {
 		return number;
 	}
-	public void setNumber(int number) {
+	public void setNumber(String number) {
 		this.number = number;
 	}
 	public String getSalestime() {

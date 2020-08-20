@@ -3,6 +3,7 @@ package jsp.eatday.model;
 import java.sql.*;
 import java.util.*;
 
+import jsp.eatday.myrest.model.MyRest;
 import jsp.eatday.user.model.User;
 
 
@@ -16,7 +17,7 @@ public class RestDAO {
    //가게 아이디(메뉴 찾기위함), 가게이름 return
    public ArrayList<Rest> getLocation(String data1, String data2, String data3){
       ArrayList<Rest> list = new ArrayList<Rest>();
-      String SQL = "select id, name, address, number, salestime, Rep_Menu, Latitude, Longitude from Rest";
+      String SQL = "select id, name, address, number, salestime, rep, latitude, longitude from Rest";
       try {
          String dbURL = "jdbc:mysql://localhost:3306/eat_day?serverTimezone=Asia/Seoul&useSSL=false";
          String dbID = "root";
@@ -58,7 +59,7 @@ public class RestDAO {
             rest.setId(rs.getString(1));
             rest.setName(rs.getString(2));
             rest.setAddress(rs.getString(3));
-            rest.setNumber(rs.getInt(4));
+            rest.setNumber(rs.getString(4));
             rest.setSalestime(rs.getString(5));
             rest.setRep(rs.getString(6));
             rest.setLatitude(rs.getFloat(7));
@@ -92,7 +93,7 @@ public class RestDAO {
 	         pstmt.setString(2, rest.getName());
 	         pstmt.setString(3, rest.getLocation());
 	         pstmt.setString(4, rest.getAddress());
-	         pstmt.setInt(5, rest.getNumber());
+	         pstmt.setString(5, rest.getNumber());
 	         pstmt.setString(6, rest.getSalestime());
 	         pstmt.setString(7, rest.getClassfy());
 	         pstmt.setString(8, rest.getWeather());
@@ -113,6 +114,49 @@ public class RestDAO {
 	    	  }
 		return -1;
 		}
+	
+	
+	   public ArrayList<Rest> getmypgeinfo(String data1, String data2){
+		   ArrayList<Rest> list = new ArrayList<Rest>();
+		   String SQL = "select name, location, address, rep, salestime, number, latitude, longitude from Rest where name = '" + data1 +"'and location = '" + data2 + "'";
+		   try {
+				String dbURL = "jdbc:mysql://localhost:3306/eat_day?serverTimezone=Asia/Seoul&useSSL=false";
+			    String dbID = "root";
+			    String dbPassword = "ehdgH*7958";
+			    Class.forName("com.mysql.jdbc.Driver");
+			    conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
+			    pstmt = conn.prepareStatement(SQL); //연결객체와 statement 객체 결합
+			    rs = pstmt.executeQuery();
+			    System.out.println("success");
+			   //결과를 저장하는 객체인 rs 객체를 생성한다.
+			   //stmt.executeQuery는 괄호 안에 있는 쿼리문을 실행하라는 뜻.
+			   //실행한 결과를 rs 객체에 넣는다.
+			    while(rs.next()) {
+			    	Rest myrest = new Rest();
+			        myrest.setName(rs.getString(1));
+			        myrest.setLocation(rs.getString(2));
+			        myrest.setAddress(rs.getString(3));
+			        myrest.setRep(rs.getString(4));
+			        myrest.setSalestime(rs.getString(5));
+			        myrest.setNumber(rs.getString(6));
+			        myrest.setLatitude(rs.getFloat(7));
+			        myrest.setLongitude(rs.getFloat(8));
+			        list.add(myrest);
+			        }
+
+			      } catch(Exception e) {
+			         e.printStackTrace();
+			      } finally {
+			         try {
+			            if(pstmt != null) pstmt.close();
+			            if(rs != null) rs.close();
+			            if(conn != null) conn.close();
+			         } catch(SQLException e) {}
+			         
+			            }
+			      return list;
+
+			   }
    
    //핀 안에서 자세히 보기 눌렀을때, 보여지는 부분
    public ArrayList<Rest> getInfo(String data){
@@ -136,7 +180,7 @@ public class RestDAO {
          while(rs.next()) {
             Rest rest = new Rest();
             rest.setAddress(rs.getString(1));
-            rest.setNumber(rs.getInt(2));
+            rest.setNumber(rs.getString(2));
             rest.setSalestime(rs.getString(3));
             list.add(rest);   
          }
@@ -176,7 +220,7 @@ public class RestDAO {
             rest.setName(rs.getString(2));
             rest.setLocation(rs.getString(3));
             rest.setAddress(rs.getString(4));
-            rest.setNumber(rs.getInt(5));
+            rest.setNumber(rs.getString(5));
             rest.setSalestime(rs.getString(6));
             rest.setClassfy(rs.getString(7));
             rest.setWeather(rs.getString(8));

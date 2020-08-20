@@ -21,15 +21,17 @@
 			userID = (String) session.getAttribute("userID");
 		}
 		
+		
 	%>
 	<div class="jumbotron text-center" style="margin-bottom:0">
 	  <h1>Eat Day</h1>
-	  <p>맛집을 추가하자!!</p> 
+	  <p>맛집을 추가하자!!</p>
+	  <a href="Index.jsp">Home</a>
 	</div>
-	<div class="container">
-	      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+	<div class="container" >
+	      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto" style="position: absolute; left:60px; margin:auto;">
 	        <div class="card card-signin my-5">
-	          <div class="card-body">
+	          <div class="card-body" >
 	            <h5 class="card-title text-center">빠짐없이 채워주세요!</h5>
 	            
 	            <form class="form-signin" method="get" action="InsertRestPro.jsp">
@@ -150,5 +152,50 @@
         </div>
       </div>
     </div>
+    
+    <div class="cont-location">
+    	<div class="col-sm-9 col-md-7 col-lg-5 mx-auto" style="position: absolute; right:60px; margin: auto; height: 50%; width:80%; margin-top:5%;">
+    		<h5>위도 경도를 확인해주세요!</h5>
+	        <div id="map" style="width:100%;height:660px;"></div>
+			<div id="clickLatlng"></div>
+      </div>
+    </div>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=20f1fd2f38bb415d99c921c1c5bbb394"></script>
+<script>
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = { 
+        center: new kakao.maps.LatLng(36.628583, 127.457583), // 지도의 중심좌표
+        level: 5 // 지도의 확대 레벨
+    };
+
+var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+// 지도를 클릭한 위치에 표출할 마커입니다
+var marker = new kakao.maps.Marker({ 
+    // 지도 중심좌표에 마커를 생성합니다 
+    position: map.getCenter() 
+}); 
+// 지도에 마커를 표시합니다
+marker.setMap(map);
+
+// 지도에 클릭 이벤트를 등록합니다
+// 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
+kakao.maps.event.addListener(map, 'click', function(mouseEvent) {        
+    
+    // 클릭한 위도, 경도 정보를 가져옵니다 
+    var latlng = mouseEvent.latLng; 
+    
+    // 마커 위치를 클릭한 위치로 옮깁니다
+    marker.setPosition(latlng);
+    
+    var message = '위도: ' + latlng.getLat() + ' / ';
+    message += '경도: ' + latlng.getLng();
+    
+    var resultDiv = document.getElementById('clickLatlng'); 
+    resultDiv.innerHTML = message;
+    
+});
+</script>
 </body>
 </html>

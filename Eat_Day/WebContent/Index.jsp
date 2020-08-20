@@ -28,7 +28,7 @@
 	
 	%>
 <body bgcolor='#000000'>
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<a class="navbar-brand" href="Index.jsp">오늘 뭐 먹지??</a>
 		<br>
 		<form action="Index.jsp" method="get">
@@ -58,7 +58,7 @@
                   <option value="비">비</option>
                   <option value="눈">눈</option>
                </select>
-               <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">찾기</button>
+               <button class="btn btn-outline-light" type="submit">찾기</button>
              </div>
           </form>
 			<% if (userID == null) {%>
@@ -86,8 +86,8 @@
 	</nav>
 	<br>
 <div class="cont-location">
-    <div id="map" style="position: absolute; right:10px; margin:auto;width:43%;height:80%;border:1px soli #ccc;"></div>
-    <div id="content_eat" style="position: absolute; left:10px; margin: auto; width:54%; hegight:80%; border: 1px soli #ccc;">
+    <div id="map" style="float: right; margin-right: 10px; width:38%; height:600; overflow:auto; border:1px soli #ccc;"></div>
+    <div id="content_eat" style="float: left; margin-left:10px; width:60%; hegight:80%; overflow:auto; border: 1px soli #ccc;">
     	<table class="table table-bordered table-sm">
     	<th>가게이름</th>
     	<th>대표메뉴</th>
@@ -103,6 +103,7 @@
 			double[] lati_test = new double[100];
 			double[] longi_test = new double[100];
 			String[] Name_arr = new String[100];
+			String name_rest = null;
 			
 					
 			RestDAO SelectDAO = new RestDAO();
@@ -116,7 +117,7 @@
 		%>
 			<tr>
 				<td><%=show.getName() %></td>
-				<td><%=show.getRep_Menu() %></td>
+				<td><%=show.getRep() %></td>
 				<td><%=show.getNumber() %></td>
 				<td><%=show.getSalestime() %></td>
 			<tr>
@@ -128,10 +129,27 @@
 				longi_test[i] = selec.get(i).getLongitude();
 		%>
 			<%}%>	
-			
 		</table>	
     </div>
+    <br>
+    <form action="MyPagePro.jsp" method="get">
+    <div id="MyRest" style="float:right; margin-right:10px; margin-bottom:500px; overflow:auto;">
+    	<select class="selectpicker" name="myrest_name">
+    		<% for (int i=0; i < selec.size(); i++){
+    			name_rest = Name_arr[i];%>
+    		<option><%=Name_arr[i] %></option>
+    		<%} %>
+        </select>
+    	<select class="selectpicker" name="myrest_location">
+    		<option value="정문">정문</option>
+            <option value="중문">중문</option>
+            <option value="후문">후문</option>
+    	</select>
+        <button class="btn btn-dark" type="submit">맛집추가!</button>
+    </div>
+    </form>
 </div>
+
 <script>
 
 var lati_test = new Array();
@@ -154,7 +172,7 @@ var moveBasic = new kakao.maps.LatLng(36.628583, 127.457583);
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
   mapOption = {
       center: new kakao.maps.LatLng(lati, longi), // 지도의 중심좌표(마지막 값 중심으로 배치 시킬))
-      level: 4 // 지도의 확대 레벨
+      level: 5 // 지도의 확대 레벨
   };  
 
 //지도 생성
