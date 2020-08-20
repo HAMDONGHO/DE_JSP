@@ -7,9 +7,9 @@
 <%@ page import="java.io.PrintWriter" %>
 <% request.setCharacterEncoding("UTF-8");//한글 깨짐 방 %>
 
-<!-- 한명의 회원정보를 담는 user라는 이름으로 클래스를 자바 빈즈로 사용 / scope:페이지 현재의 페이지에서만 사용-->
+<!-- 한명의 회원정보를 담는 user라는 이름으로 클래스를 자바 빈즈로 사용(객체 빈 껍데기 생성) / scope:페이지 현재의 페이지에서만 사용-->
 <jsp:useBean id="user" class="jsp.eatday.user.model.User" scope="request" />
-<!-- 생성된 자바 빈즈의 객체를 이용해 setter에 속성 값 전달 -->
+<!-- 생성된 자바 빈즈의 객체에 form으로부터 들어온 데이터를 각 프로퍼티에 저 이용해 setter에 속성 값 전달 -->
 <jsp:setProperty name="user" property="id"/>
 <jsp:setProperty name="user" property="email"/>
 <jsp:setProperty name="user" property="password"/>

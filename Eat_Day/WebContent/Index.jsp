@@ -4,8 +4,14 @@
 <%@page import="jsp.eatday.menu.model.MenuDAO"%>
 <%@page import="jsp.eatday.model.*"%>
 <%@page import="jsp.eatday.model.RestDAO"%>
+
+<%@ page import="jsp.eatday.myrest.model.MyRest" %>
+<%@ page import="jsp.eatday.myrest.model.MyRestDAO" %>
+
 <%@page import="java.util.ArrayList"%>
 <%@ page import="java.sql.*, javax.sql.*, javax.naming.*" %>
+
+<% request.setCharacterEncoding("UTF-8");//한글 깨짐 방 %>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2d3f891aa941df0a0b5c08b7f62ee1f9&libraries=services"></script>
 
 <!DOCTYPE html>

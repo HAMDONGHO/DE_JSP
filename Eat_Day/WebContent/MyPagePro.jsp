@@ -35,6 +35,8 @@
 	}
 	
 	System.out.println(Longitude);
+	
+//여기서 이 창을 blank로 떠서 html태그로 내용 뜨게하고 그 내용 submit으로 proc따로 만들어 걸로 전달해 insert 하는 식으로 구현하면 뙬
 	%>
 	 
 <!DOCTYPE html>
