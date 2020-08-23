@@ -1,5 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@page import="java.io.PrintWriter"%>
+<%@page import="jsp.eatday.menu.model.Menu"%>
+<%@page import="jsp.eatday.menu.model.MenuDAO"%>
+<%@page import="jsp.eatday.model.*"%>
+<%@page import="jsp.eatday.model.RestDAO"%>
+
+<%@ page import="jsp.eatday.myrest.model.MyRest" %>
+<%@ page import="jsp.eatday.myrest.model.MyRestDAO" %>
+
+<%@page import="java.util.ArrayList"%>
+<%@ page import="java.sql.*, javax.sql.*, javax.naming.*" %>
+
+<% request.setCharacterEncoding("UTF-8");//한글 깨짐 방 %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +23,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script><script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-<title>Insert title here</title>
+<title>My Page</title>
 </head>
   <body>
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
@@ -30,9 +42,9 @@
           <div class="sidebar-sticky">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link active" href="#">
+                <a class="nav-link active" href="Index.jsp">
                   <span data-feather="home"></span>
-                  맛집 리스트 <span class="sr-only">(current)</span>
+                 Home <span class="sr-only">(current)</span>
                 </a>
               </li>
               <li class="nav-item">
@@ -42,27 +54,21 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" target="_blank" href="https://www.facebook.com/">
                   <span data-feather="shopping-cart"></span>
-                  Products
+                  Facebook
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" target="_blank" href="https://www.instagram.com/">
                   <span data-feather="users"></span>
-                  Customers
+                  Instagram
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="Reports.jsp">
                   <span data-feather="bar-chart-2"></span>
                   Reports
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="layers"></span>
-                  Integrations
                 </a>
               </li>
             </ul>
@@ -89,13 +95,7 @@
               <li class="nav-item">
                 <a class="nav-link" href="#">
                   <span data-feather="file-text"></span>
-                  Social engagement
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  Year-end sale
+                  Personal taste
                 </a>
               </li>
             </ul>
@@ -115,135 +115,59 @@
               </button>
             </div>
           </div>
+          
+          <div id="map" style="float: center; margin-right: 10px; width:100%; height:500px; border:1px soli #ccc;"></div>
+          <!-- <canvas class="my-4" id="myChart" width="900" height="380"></canvas>  -->
 
-          <canvas class="my-4" id="myChart" width="900" height="380"></canvas>
-
-          <h2>Section title</h2>
           <div class="table-responsive">
+          <h2>My List</h2>
             <table class="table table-striped table-sm">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                  <th>Header</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1,001</td>
-                  <td>Lorem</td>
-                  <td>ipsum</td>
-                  <td>dolor</td>
-                  <td>sit</td>
-                </tr>
-                <tr>
-                  <td>1,002</td>
-                  <td>amet</td>
-                  <td>consectetur</td>
-                  <td>adipiscing</td>
-                  <td>elit</td>
-                </tr>
-                <tr>
-                  <td>1,003</td>
-                  <td>Integer</td>
-                  <td>nec</td>
-                  <td>odio</td>
-                  <td>Praesent</td>
-                </tr>
-                <tr>
-                  <td>1,003</td>
-                  <td>libero</td>
-                  <td>Sed</td>
-                  <td>cursus</td>
-                  <td>ante</td>
-                </tr>
-                <tr>
-                  <td>1,004</td>
-                  <td>dapibus</td>
-                  <td>diam</td>
-                  <td>Sed</td>
-                  <td>nisi</td>
-                </tr>
-                <tr>
-                  <td>1,005</td>
-                  <td>Nulla</td>
-                  <td>quis</td>
-                  <td>sem</td>
-                  <td>at</td>
-                </tr>
-                <tr>
-                  <td>1,006</td>
-                  <td>nibh</td>
-                  <td>elementum</td>
-                  <td>imperdiet</td>
-                  <td>Duis</td>
-                </tr>
-                <tr>
-                  <td>1,007</td>
-                  <td>sagittis</td>
-                  <td>ipsum</td>
-                  <td>Praesent</td>
-                  <td>mauris</td>
-                </tr>
-                <tr>
-                  <td>1,008</td>
-                  <td>Fusce</td>
-                  <td>nec</td>
-                  <td>tellus</td>
-                  <td>sed</td>
-                </tr>
-                <tr>
-                  <td>1,009</td>
-                  <td>augue</td>
-                  <td>semper</td>
-                  <td>porta</td>
-                  <td>Mauris</td>
-                </tr>
-                <tr>
-                  <td>1,010</td>
-                  <td>massa</td>
-                  <td>Vestibulum</td>
-                  <td>lacinia</td>
-                  <td>arcu</td>
-                </tr>
-                <tr>
-                  <td>1,011</td>
-                  <td>eget</td>
-                  <td>nulla</td>
-                  <td>Class</td>
-                  <td>aptent</td>
-                </tr>
-                <tr>
-                  <td>1,012</td>
-                  <td>taciti</td>
-                  <td>sociosqu</td>
-                  <td>ad</td>
-                  <td>litora</td>
-                </tr>
-                <tr>
-                  <td>1,013</td>
-                  <td>torquent</td>
-                  <td>per</td>
-                  <td>conubia</td>
-                  <td>nostra</td>
-                </tr>
-                <tr>
-                  <td>1,014</td>
-                  <td>per</td>
-                  <td>inceptos</td>
-                  <td>himenaeos</td>
-                  <td>Curabitur</td>
-                </tr>
-                <tr>
-                  <td>1,015</td>
-                  <td>sodales</td>
-                  <td>ligula</td>
-                  <td>in</td>
-                  <td>libero</td>
-                </tr>
-              </tbody>
+            	<th>가게이름</th>
+    			<th>주소</th>
+    			<th>메뉴</th>
+    			<th>영업시간</th>
+    			<th>전화번호</th>
+		<%
+			String userID = null;
+			String rest_name = null;
+			String rest_address =null;
+			String rest_rep = null;
+			String rest_salestime = null;
+			String rest_number = null;
+			double longi = 0;
+			double lati = 0;
+			double[] lati_test = new double[100];
+			double[] longi_test = new double[100];
+			String[] Name_arr = new String[100];
+			String name_rest = null;
+			
+			if(session.getAttribute("id") != null){
+				userID = (String) session.getAttribute("id");
+			}
+					
+			MyRestDAO myrestDAO = new MyRestDAO();
+			ArrayList<MyRest> info = myrestDAO.getinfo(userID);
+			
+			for (MyRest show: info){
+				rest_name = show.getRest_name();
+				lati = show.getRest_latitude();
+				longi = show.getRest_longitude();
+		%>
+			<tr>
+				<td><%=show.getRest_name() %></td>
+				<td><%=show.getRest_address() %></td>
+				<td><%=show.getRest_rep() %></td>
+				<td><%=show.getRest_salestime() %></td>
+				<td><%=show.getRest_number() %>
+			<tr>
+		<%}%>
+		<%
+			for (int i = 0; i < info.size(); i++){
+				Name_arr[i] = info.get(i).getRest_name();
+				lati_test[i] = info.get(i).getRest_latitude();
+				longi_test[i] = info.get(i).getRest_longitude();
+		%>
+			<%}%>	
             </table>
           </div>
         </main>
@@ -253,18 +177,191 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=20f1fd2f38bb415d99c921c1c5bbb394"></script>
+<script>
+
+var lati_test = new Array();
+var Name_arr = new Array();
+var longi_test = new Array();
+var lati = '<%=lati%>'
+var longi = '<%=longi%>'
+var moveLatLon1 = new kakao.maps.LatLng(36.632959, 127.452813); //정문
+var moveLatLon2 = new kakao.maps.LatLng(36.632722, 127.458656); //중문
+var moveLatLon3 = new kakao.maps.LatLng(36.625222, 127.463933); //후문
+var moveBasic = new kakao.maps.LatLng(36.628583, 127.457583);
+
+// 자바스크립트 배열에 이름, 위도, 경도 java 배열 담음
+<%for(int i=0;i<info.size();i++){%>
+	Name_arr[<%=i%>]='<%=Name_arr[i]%>';
+	lati_test[<%=i%>]='<%=lati_test[i]%>';
+	longi_test[<%=i%>]='<%=longi_test[i]%>';
+<%}%>
+
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+  mapOption = {
+      center: new kakao.maps.LatLng(36.738649495004985, 128.00236575261204), // 지도의 중심좌표(마지막 값 중심으로 배치 시킬))
+      level: 13 // 지도의 확대 레벨
+  };  
+
+//지도 생성
+var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+//지도 이동
+function panToL(){
+	var zone = document.getElementById("location")
+	  
+	if (zone.value=="정문"){
+		map.panTo(moveLatLon1)
+	}
+	else if (zone.value=="중문"){
+		map.panTo(moveLatLon2)
+	}
+	else if (zone.value=="후문"){
+		map.panTo(moveLatLon3)
+	}
+	else{
+		map.PanTo(moveBasic)
+	}
+}
+
+//마커에 적용할 위치 변수
+var positions = [];
+/*var positions = [
+	{
+		content: Name_arr[i], 
+    	latlng: new kakao.maps.LatLng(lati, longi)
+	},
+	{
+    	content: '생태연못', 
+    	latlng: new kakao.maps.LatLng(33.450936, 126.569477)
+	},
+	{
+    	title: '텃밭', 
+    	latlng: new kakao.maps.LatLng(33.450879, 126.569940)
+	},
+	{
+    	title: '근린공원',
+    	latlng: new kakao.maps.LatLng(33.451393, 126.570738)
+	}
+];*/
+
+//마커를 표시할 위치와 title 객체 배열에 받아온 이름, 위도, 경도 추가 
+for(var i=0; i< Name_arr.length; i++){
+	positions.push({content:Name_arr[i],latlng:new kakao.maps.LatLng(lati_test[i],longi_test[i])})
+	
+}
+
+//마커 이미지
+var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+
+//마커마다 이미지 적용해서 지도에 추가
+for (var i = 0; i < positions.length; i ++) {
+    
+    // 마커 이미지의 이미지 크기 입니다
+    var imageSize = new kakao.maps.Size(24, 35); 
+    
+    // 마커 이미지를 생성합니다    
+    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+    
+    // 마커를 생성합니다
+    var marker = new kakao.maps.Marker({
+        map: map, // 마커를 표시할 지도
+        position: positions[i].latlng, // 마커를 표시할 위치
+        //title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+        image : markerImage // 마커 이미지 
+    });
+    // 마커에 표시할 인포윈도우를 생성합니다 
+    var infowindow = new kakao.maps.InfoWindow({
+        content: positions[i].content // 인포윈도우에 표시할 내용
+    });
+
+    // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+    // 이벤트 리스너로는 클로저를 만들어 등록합니다 
+    // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+    kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+}
+
+//인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+function makeOverListener(map, marker, infowindow) {
+    return function() {
+        infowindow.open(map, marker);
+    };
+}
+
+// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+function makeOutListener(infowindow) {
+    return function() {
+        infowindow.close();
+    };
+}
+
+//이름, 위도, 경도 test
+for(var j = 0; j<Name_arr.length; j++){
+	console.log(Name_arr[j]);
+	console.log(lati_test[j]);
+	console.log(longi_test[j]);
+}
+
+/*
+//장소 검색 객체를 생성합니다
+var ps = new kakao.maps.services.Places(map); 
+
+//카테고리로 은행을 검색합니다
+ps.categorySearch('CE7', placesSearchCB, {useMapBounds:true}); 
+
+//키워드 검색 완료 시 호출되는 콜백함수 입니다
+function placesSearchCB (data, status, pagination) {
+  if (status === kakao.maps.services.Status.OK) {
+      for (var i=0; i<data.length; i++) {
+          displayMarker(data[i]);    
+      }       
+  }
+}
+
+//지도에 마커를 표시하는 함수입니다
+function displayMarker(place) {
+  // 마커를 생성하고 지도에 표시합니다
+  var marker = new kakao.maps.Marker({
+      map: map,
+      position: new kakao.maps.LatLng(place.y, place.x) 
+  });
+
+  // 마커에 클릭이벤트를 등록합니다
+  kakao.maps.event.addListener(marker, 'click', function() {
+      // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+      infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
+      infowindow.open(map, marker);
+  });
+}
+*/
+
+//지도 이동
+//충북대 중심
+/*
+function setCenter() {            
+  // 이동할 위도 경도 위치를 생성합니다 
+  var moveLatLon = new kakao.maps.LatLng(36.628583, 127.457583);
+  
+  // 지도 중심을 이동 시킵니다
+  map.setCenter(moveLatLon);
+}
+*/
+</script>
+<!--
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
     <script src="../../assets/js/vendor/popper.min.js"></script>
     <script src="../../dist/js/bootstrap.min.js"></script>
 
-    <!-- Icons -->
+     Icons
     <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
     <script>
       feather.replace()
     </script>
 
-    <!-- Graphs -->
+     Graphs
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
     <script>
       var ctx = document.getElementById("myChart");
@@ -294,6 +391,6 @@
           }
         }
       });
-    </script>
+      -->
   </body>
 </html>

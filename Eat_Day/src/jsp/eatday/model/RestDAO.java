@@ -118,7 +118,7 @@ public class RestDAO {
 	
 	   public ArrayList<Rest> getmypgeinfo(String data1, String data2){
 		   ArrayList<Rest> list = new ArrayList<Rest>();
-		   String SQL = "select name, location, address, rep, salestime, number, latitude, longitude from Rest where name = '" + data1 +"'and location = '" + data2 + "'";
+		   String SQL = "select id, name, location, address, rep, salestime, number, latitude, longitude, classfy from Rest where name = '" + data1 +"'and location = '" + data2 + "'";
 		   try {
 				String dbURL = "jdbc:mysql://localhost:3306/eat_day?serverTimezone=Asia/Seoul&useSSL=false";
 			    String dbID = "root";
@@ -133,14 +133,16 @@ public class RestDAO {
 			   //실행한 결과를 rs 객체에 넣는다.
 			    while(rs.next()) {
 			    	Rest myrest = new Rest();
-			        myrest.setName(rs.getString(1));
-			        myrest.setLocation(rs.getString(2));
-			        myrest.setAddress(rs.getString(3));
-			        myrest.setRep(rs.getString(4));
-			        myrest.setSalestime(rs.getString(5));
-			        myrest.setNumber(rs.getString(6));
-			        myrest.setLatitude(rs.getFloat(7));
-			        myrest.setLongitude(rs.getFloat(8));
+			    	myrest.setId(rs.getString(1));
+			        myrest.setName(rs.getString(2));
+			        myrest.setLocation(rs.getString(3));
+			        myrest.setAddress(rs.getString(4));
+			        myrest.setRep(rs.getString(5));
+			        myrest.setSalestime(rs.getString(6));
+			        myrest.setNumber(rs.getString(7));
+			        myrest.setLatitude(rs.getFloat(8));
+			        myrest.setLongitude(rs.getFloat(9));
+			        myrest.setClassfy(rs.getString(10));
 			        list.add(myrest);
 			        }
 
