@@ -20,8 +20,11 @@
 	String Salestime = null;
 	String Number = null;
 	String Classfy = null;
+	String[] Dupli_name = new String[100];
+	String[] Dupli_id = new String[100];
 	float Latitude = 0;
 	float Longitude = 0;
+	int judge = 0;
 	
 	if(session.getAttribute("id") != null){
 		user_id = (String) session.getAttribute("id");
@@ -83,17 +86,35 @@
 			script.println("</script>");
 		}else{
 			MyRestDAO myrestDAO = new MyRestDAO();//인스턴스생성
+			ArrayList<MyRest> dupli = myrestDAO.getinfo(user_id);
 			
-			int result = myrestDAO.insert(mypage); 
-			if (result == -1){ // 아이디가 기본키기. 중복되면 오류.
+			for (int i = 0; i < dupli.size(); i++){
+				Dupli_id[i] = dupli.get(i).getRest_id();
+				Dupli_name[i] = dupli.get(i).getRest_name();
+			}
+			
+			for (int i = 0; i < Dupli_id.length; i++){
+				
+				if (rest_id.equals(Dupli_id[i])){
+					System.out.println("중복 찾았다");
+					judge = -1;
+					break;
+				}
+				else{
+					continue;
+				}
+			}
+			
+			if (judge == -1){ // 아이디가 기본키기. 중복되면 오류.
 				PrintWriter script = response.getWriter();
 				script.println("<script>");
 				script.println("alert('이미 넣었던 가게입니다.')");
-				script.println("history.back()");
+				script.println("location.href = 'Index.jsp'");
 				script.println("</script>");
 			}
 			//가입성공
 			else {
+				int result = myrestDAO.insert(mypage); 
 				//session.setAttribute("id", user.getId());
 				PrintWriter script = response.getWriter();
 				script.println("<script>");

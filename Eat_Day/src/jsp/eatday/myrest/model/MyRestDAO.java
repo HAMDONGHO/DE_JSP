@@ -65,7 +65,7 @@ public class MyRestDAO {
 			   //실행한 결과를 rs 객체에 넣는다.
 			         while(rs.next()) {
 			            MyRest myrest = new MyRest();
-			            myrest.setUser_id(rs.getString(1));
+			            myrest.setRest_id(rs.getString(1));
 			            myrest.setRest_name(rs.getString(2));
 			            myrest.setRest_location(rs.getString(3));
 			            myrest.setRest_address(rs.getString(4));
